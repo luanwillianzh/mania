@@ -27,7 +27,7 @@ def get_chapter(novel, chapter):
       subtitle = soup.select_one("h2.mt-0").text.strip().replace("\n", " ")
     except:
       subtitle = ""
-    content = "".join([ f"<p>{p.select_one('span').text}</p>" for p in soup.select("#chapter-content p") if p.select_one("span") != None ])
+    content = soup.select_one("#chapter-content").prettify().split("<div data-reactionable")[0].split("/h2>\n ")[1]
     return {"title": title, "subtitle": subtitle, "content": content}
 
 @app.get("/search/{text}")
