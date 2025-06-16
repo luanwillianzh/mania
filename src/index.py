@@ -7,6 +7,12 @@ from bs4 import BeautifulSoup
 import urllib.parse
 app = FastAPI()
 
+@app.get("/lancamentos")
+def lancamentos():
+    response = requests.get("https://novelmania.com.br")
+    soup = BeautifulSoup(response.text, 'html.parser')
+    return {"resultado": [ {"url": i.select_one("a")["href"].split("/")[-1], "nome": i.select_one("h2"), "cover": i.select_one("img")["src"]} for i in soup.select(".novels .col-6") ]}
+
 @app.get("/novel/{novel}")
 def get_novel_info(novel):
     response = requests.get(f"https://novelmania.com.br/novels/{novel}/", verify=False)
