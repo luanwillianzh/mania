@@ -14,7 +14,7 @@ def get_novel_info(novel):
     name = soup.find_all("h1",{"class": "font-400 mb-2 wow fadeInRight mr-3"})[0].text.strip().replace("\n", " ")
     desc = "\n".join([ p.text for p in soup.find_all("div", {"class": "text"})[0] ])
     cover = soup.select_one(".img-responsive")["src"]
-    chapters = [(a.find_all("strong")[0].text, a["href"].split("/")[-2]) for a in soup.select("ol.list-inline li a")]
+    chapters = [(a.find_all("strong")[0].text, a["href"].split("/")[-1]) for a in soup.select("ol.list-inline li a")]
     genres = [ [a["href"].split("/")[-1], a["title"]] for a in soup.select(".list-tags a") ]
     return {"nome": name, "desc": desc, "cover": cover, "chapters": chapters, "genres": genres}
 
